@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="es-ES">
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="SemiColonWeb" />
+
+	<!-- ═══ FUENTES Y ESTILOS BASE ═══════════════════════════════ -->
+	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700,900|Playfair+Display:400,700" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
+	<link rel="stylesheet" href="style.css" type="text/css" />
+	<link rel="stylesheet" href="css/dark.css" type="text/css" />
+	<link rel="stylesheet" href="demos/resume/resume.css" type="text/css" />
+	<link rel="stylesheet" href="demos/resume/css/fonts.css" type="text/css" />
+	<link rel="stylesheet" href="css/font-icons.css" type="text/css" />
+	<link rel="stylesheet" href="css/animate.css" type="text/css" />
+	<link rel="stylesheet" href="css/magnific-popup.css" type="text/css" />
+	<link rel="stylesheet" href="css/responsive.css" type="text/css" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<title>Daniel Guerra | 102</title>
+
+	<style>
+
+		/* ═══════════════════════════════════════════════════════════
+		   RESET GLOBAL — Evita scroll horizontal y conflictos
+		═══════════════════════════════════════════════════════════ */
+		*, *::before, *::after { box-sizing: border-box; }
+		html, body {
+			margin: 0;
+			padding: 0;
+			overflow-x: hidden;
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   VARIABLES
+		═══════════════════════════════════════════════════════════ */
+		:root {
+			--rojo:       #C0201A;
+			--rojo-dark:  #960f0a;
+			--rojo-light: #e53935;
+			--bg-form:    #111827;
+			--card-bg:    rgba(255,255,255,0.06);
+			--border:     rgba(255,255,255,0.13);
+			--text-light: #94a3b8;
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   HEADER — Fijo, transparente, con logo marca.png
+		═══════════════════════════════════════════════════════════ */
+		#header {
+			position: fixed !important;
+			top: 0; left: 0; right: 0;
+			z-index: 1000;
+			background: rgba(0,0,0,0.30) !important;
+			backdrop-filter: blur(10px);
+			-webkit-backdrop-filter: blur(10px);
+			border-bottom: 1px solid rgba(255,255,255,0.08);
+		}
+		#header-wrap { height: 70px; }
+
+		/* Logo: imagen marca.png en lugar del texto "102" */
+		#logo a {
+			display: flex !important;
+			align-items: center;
+			height: 70px;
+			line-height: 70px;
+		}
+		#logo img.logo-img {
+			height: 52px;
+			width: auto;
+			display: block;
+			filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   HERO — Ocupa exactamente 100vh con capas apiladas
+		═══════════════════════════════════════════════════════════ */
+		#hero-section {
+			position: relative;
+			width: 100%;
+			height: 100vh;
+			min-height: 600px;
+			overflow: hidden;
+		}
+
+		/* ── Capa 1: fondo.png estático (position:absolute cubre todo) */
+		#hero-bg {
+			position: absolute;
+			top: 0; left: 0; right: 0; bottom: 0;
+			background: url('demos/resume/images/hero-image/fondo.png') no-repeat center center / cover;
+			z-index: 1;
+		}
+
+		/* ── Overlay oscuro semitransparente sobre el fondo
+		       para que las partículas y el texto destaquen */
+		#hero-overlay {
+			position: absolute;
+			top: 0; left: 0; right: 0; bottom: 0;
+			background: rgba(90, 10, 10, 0.18);
+			z-index: 2;
+		}
+
+		/* ── Capa 2: Canvas partículas (CUBRE TODO el hero) */
+		#particles-canvas {
+			position: absolute;
+			top: 0; left: 0;
+			width: 100% !important;
+			height: 100% !important;
+			z-index: 3;
+			pointer-events: none;
+		}
+
+		/* ── Capa 3: Foto daniel.png — ocupa lado izquierdo completo */
+		#hero-person {
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 52%;            /* ancho relativo al hero */
+			height: 100%;          /* altura completa del hero */
+			background: url('demos/resume/images/hero-image/daniel.png')
+			            no-repeat bottom left / contain;
+			z-index: 4;
+			opacity: 0;
+			animation: personSlide 1.4s ease 0.5s forwards;
+		}
+		@keyframes personSlide {
+			from { opacity: 0; transform: translateX(-40px); }
+			to   { opacity: 1; transform: translateX(0); }
+		}
+
+		/* ── Capa 4: Bloque de texto (lado derecho) */
+		#hero-text {
+			position: absolute;
+			top: 0; right: 0;
+			width: 50%;
+			height: 100%;
+			display: flex;
+			flex-direction: column;
+			justify-content: center;
+			align-items: flex-end;
+			padding: 80px 6% 40px;
+			z-index: 5;
+			text-align: right;
+		}
+		#hero-text h1 {
+			font-family: 'Playfair Display', serif;
+			font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+			font-weight: 700;
+			color: #fff;
+			line-height: 1.15;
+			margin: 0 0 12px;
+			text-shadow: 0 2px 16px rgba(0,0,0,0.7), 0 0 40px rgba(0,0,0,0.4);
+			opacity: 0;
+			animation: fadeRight 1s ease 0.9s forwards;
+		}
+		#hero-text p {
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: clamp(1rem, 1.8vw, 1.2rem);
+			font-weight: 300;
+			color: rgba(255,255,255,0.93);
+			line-height: 1.65;
+			margin: 0 0 32px;
+			text-shadow: 0 1px 10px rgba(0,0,0,0.6);
+			letter-spacing: 2px;
+			opacity: 0;
+			animation: fadeRight 1s ease 1.15s forwards;
+		}
+		@keyframes fadeRight {
+			from { opacity: 0; transform: translateX(30px); }
+			to   { opacity: 1; transform: translateX(0); }
+		}
+
+		/* ── Botón Comencemos */
+		#btn-comenzar {
+			display: inline-block;
+			padding: 14px 42px;
+			background: var(--rojo);
+			color: #fff;
+			font-family: 'Source Sans Pro', sans-serif;
+			font-size: 14px;
+			font-weight: 700;
+			letter-spacing: 3px;
+			text-transform: uppercase;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+			transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+			box-shadow: 0 4px 20px rgba(192,32,26,0.55);
+			opacity: 0;
+			animation: fadeRight 1s ease 1.4s forwards;
+		}
+		#btn-comenzar:hover {
+			background: var(--rojo-dark);
+			transform: translateY(-2px);
+			box-shadow: 0 6px 24px rgba(192,32,26,0.65);
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   EFECTO BLUR — Igual que el original de la plantilla
+		   La capa blurred-layer se activa con JS al hacer scroll
+		═══════════════════════════════════════════════════════════ */
+		#hero-blur-layer {
+			position: absolute;
+			top: 0; left: 0; right: 0; bottom: 0;
+			background: url('demos/resume/images/hero-image/fondo.png') no-repeat center center / cover;
+			z-index: 6;       /* encima de todo en el hero */
+			opacity: 0;
+			filter: blur(8px);
+			transform: scale(1.05); /* evita bordes blancos al blur */
+			pointer-events: none;
+			transition: opacity 0.1s linear;
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   SECCIÓN ENCUESTA — Fondo sólido oscuro con traslucidez
+		═══════════════════════════════════════════════════════════ */
+		#content {
+			position: relative;
+			z-index: 10;
+		}
+		#section-encuesta {
+			background: var(--bg-form);
+			padding: 80px 0 100px;
+			min-height: 100vh;
+			/* Sutil borde superior para separar del hero */
+			border-top: 3px solid var(--rojo);
+		}
+
+		/* ── Tarjeta central semi-translúcida para la encuesta */
+		.survey-card {
+			background: rgba(255,255,255,0.03);
+			border: 1px solid rgba(255,255,255,0.07);
+			border-radius: 16px;
+			padding: 50px 40px;
+			max-width: 940px;
+			margin: 0 auto;
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   PASOS — Animación de entrada
+		═══════════════════════════════════════════════════════════ */
+		.survey-step { display: none; animation: fadeInUp 0.45s ease forwards; }
+		.survey-step.active { display: block; }
+		@keyframes fadeInUp {
+			from { opacity: 0; transform: translateY(24px); }
+			to   { opacity: 1; transform: translateY(0); }
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   ENCABEZADOS
+		═══════════════════════════════════════════════════════════ */
+		.survey-heading { text-align: center; margin-bottom: 10px; }
+		.survey-heading h2 {
+			color: #f1f5f9;
+			font-family: 'Playfair Display', serif;
+			font-size: 2.1rem;
+			margin-bottom: 10px;
+		}
+		.survey-heading p {
+			color: var(--text-light);
+			font-size: 15px;
+			max-width: 600px;
+			margin: 0 auto 10px;
+			line-height: 1.7;
+		}
+		.survey-divider {
+			width: 55px; height: 3px;
+			background: var(--rojo);
+			margin: 14px auto 32px;
+			border-radius: 2px;
+		}
+		.pregunta-label {
+			text-align: center; color: rgba(255,255,255,0.4);
+			font-size: 12px; margin-bottom: 20px;
+			letter-spacing: 1.5px; text-transform: uppercase;
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   CHECKBOXES
+		═══════════════════════════════════════════════════════════ */
+		.checkbox-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+			gap: 10px;
+			margin-bottom: 24px;
+		}
+		.check-item {
+			background: var(--card-bg);
+			border: 1px solid var(--border);
+			border-radius: 8px;
+			padding: 13px 16px;
+			cursor: pointer;
+			transition: border-color 0.2s, background 0.2s;
+			display: flex;
+			align-items: center;
+			gap: 12px;
+			user-select: none;
+		}
+		.check-item:hover { border-color: var(--rojo-light); background: rgba(192,32,26,0.09); }
+		.check-item.selected { border-color: var(--rojo); background: rgba(192,32,26,0.13); }
+		.check-item input[type="checkbox"] {
+			appearance: none; -webkit-appearance: none;
+			width: 20px; height: 20px; min-width: 20px;
+			border: 2px solid rgba(255,255,255,0.28);
+			border-radius: 4px; background: transparent;
+			cursor: pointer; transition: all 0.2s; position: relative;
+			pointer-events: none;
+		}
+		.check-item input[type="checkbox"]:checked { background: var(--rojo); border-color: var(--rojo); }
+		.check-item input[type="checkbox"]:checked::after {
+			content: '✓'; position: absolute; color: #fff; font-size: 13px;
+			top: 50%; left: 50%; transform: translate(-50%,-50%);
+		}
+		.check-item label {
+			color: #cbd5e1; font-size: 14px; line-height: 1.4;
+			cursor: pointer; margin: 0; font-weight: 400; pointer-events: none;
+		}
+		.check-letter { color: #fca5a5; font-weight: 700; margin-right: 2px; }
+
+		/* Otro */
+		.otro-wrap { margin: 0 0 10px; }
+		#otro-input {
+			display: none; width: 100%; margin-top: 9px;
+			padding: 12px 16px; background: rgba(255,255,255,0.05);
+			border: 1px solid var(--border); border-radius: 6px;
+			color: #fff; font-size: 14px; font-family: 'Source Sans Pro', sans-serif;
+		}
+		#otro-input:focus { outline: none; border-color: var(--rojo-light); }
+		#otro-input::placeholder { color: rgba(255,255,255,0.22); }
+
+		/* ═══════════════════════════════════════════════════════════
+		   ERRORES
+		═══════════════════════════════════════════════════════════ */
+		.survey-error {
+			display: none; color: #fca5a5; font-size: 13px;
+			text-align: center; margin: 12px auto 4px;
+			background: rgba(192,32,26,0.12); border: 1px solid rgba(192,32,26,0.3);
+			border-radius: 6px; padding: 10px 16px; max-width: 560px;
+		}
+
+		/* ═══════════════════════════════════════════════════════════
+		   BOTONES PRINCIPALES
+		═══════════════════════════════════════════════════════════ */
+		.survey-btn {
+			display: block; margin: 26px auto 0; padding: 15px 52px;
+			background: var(--rojo); color: #fff; border: none; border-radius: 4px;
+			font-family: 'Source Sans Pro', sans-serif; font-size: 14px; font-weight: 700;
+			letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+			transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
+			box-shadow: 0 4px 14px rgba(192,32,26,0.35);
+		}
+		.survey-btn:hover { background: var(--rojo-dark); transform: translateY(-2px); box-shadow: 0 6px 18px rgba(192,32,26,0.45); }
+		.survey-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+
+		/* ═══════════════════════════════════════════════════════════
+		   FORMULARIO DATOS PERSONALES
+		═══════════════════════════════════════════════════════════ */
+		.personal-form { max-width: 540px; margin: 0 auto; }
+		.form-group-survey { margin-bottom: 18px; }
+		.form-group-survey label {
+			display: block; color: rgba(255,255,255,0.5); font-size: 11px;
+			letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 7px; font-weight: 600;
+		}
+		.form-group-survey input[type="text"],
+		.form-group-survey input[type="number"] {
+			width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.05);
+			border: 1px solid var(--border); border-radius: 6px; color: #f1f5f9;
+			font-size: 15px; font-family: 'Source Sans Pro', sans-serif;
+			transition: border 0.2s, background 0.2s;
+		}
+		.form-group-survey input:focus { outline: none; border-color: var(--rojo-light); background: rgba(192,32,26,0.06); }
+		.form-group-survey input::placeholder { color: rgba(255,255,255,0.18); }
+
+		.autorizo-wrap {
+			display: flex; align-items: flex-start; gap: 12px;
+			background: var(--card-bg); border: 1px solid var(--border);
+			border-radius: 8px; padding: 15px 17px; cursor: pointer;
+			transition: border-color 0.2s; user-select: none;
+		}
+		.autorizo-wrap:hover { border-color: var(--rojo-light); }
+		.autorizo-wrap input[type="checkbox"] {
+			appearance: none; -webkit-appearance: none;
+			width: 21px; height: 21px; min-width: 21px;
+			border: 2px solid rgba(255,255,255,0.28); border-radius: 4px;
+			background: transparent; cursor: pointer; transition: all 0.2s;
+			position: relative; margin-top: 2px; pointer-events: none;
+		}
+		.autorizo-wrap input[type="checkbox"]:checked { background: var(--rojo); border-color: var(--rojo); }
+		.autorizo-wrap input[type="checkbox"]:checked::after {
+			content: '✓'; position: absolute; color: #fff; font-size: 13px;
+			top: 50%; left: 50%; transform: translate(-50%,-50%);
+		}
+		.autorizo-wrap label { color: #94a3b8; font-size: 13px; line-height: 1.6; cursor: pointer; margin: 0; pointer-events: none; }
+
+		/* ═══════════════════════════════════════════════════════════
+		   PANTALLA DE ÉXITO
+		═══════════════════════════════════════════════════════════ */
+		#step-success { text-align: center; padding: 30px 20px 50px; }
+		.success-img-wrap {
+			width: 170px; height: 170px;
+			margin: 0 auto 26px; border-radius: 50%; overflow: hidden;
+			box-shadow: 0 8px 40px rgba(192,32,26,0.45);
+			animation: popIn 0.55s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
+		}
+		.success-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+		@keyframes popIn {
+			from { transform: scale(0); opacity: 0; }
+			to   { transform: scale(1); opacity: 1; }
+		}
+		#step-success h2 { color: #f1f5f9; font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 18px; }
+		.success-msg {
+			color: var(--text-light); font-size: 16px; max-width: 540px;
+			margin: 0 auto 30px; line-height: 1.85;
+			background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+			border-radius: 10px; padding: 22px 28px;
+		}
+		.success-firma { color: #fca5a5; font-weight: 700; font-size: 15px; display: block; margin-top: 14px; }
+		.btn-regresar {
+			display: inline-block; margin-top: 6px; padding: 13px 38px;
+			background: var(--rojo); color: #fff !important; border: none;
+			border-radius: 4px; font-family: 'Source Sans Pro', sans-serif;
+			font-size: 13px; font-weight: 700; letter-spacing: 2px;
+			text-transform: uppercase; cursor: pointer;
+			transition: background 0.3s, transform 0.2s;
+			box-shadow: 0 4px 14px rgba(192,32,26,0.35);
+			text-decoration: none !important;
+		}
+		.btn-regresar:hover { background: var(--rojo-dark); transform: translateY(-2px); color: #fff !important; }
+
+		/* Spinner */
+		.spinner {
+			display: inline-block; width: 16px; height: 16px;
+			border: 2px solid rgba(255,255,255,0.3); border-top-color: #fff;
+			border-radius: 50%; animation: spin 0.7s linear infinite;
+			vertical-align: middle; margin-right: 7px;
+		}
+		@keyframes spin { to { transform: rotate(360deg); } }
+
+		/* Indicador de pasos */
+		.step-indicator {
+			display: flex; justify-content: center; align-items: center;
+			gap: 10px; margin-bottom: 36px;
+		}
+		.step-dot {
+			width: 10px; height: 10px; border-radius: 50%;
+			background: rgba(255,255,255,0.14); transition: all 0.3s;
+		}
+		.step-dot.active { background: var(--rojo); transform: scale(1.35); }
+		.step-dot.done   { background: rgba(192,32,26,0.5); }
+		.step-line { width: 40px; height: 2px; background: rgba(255,255,255,0.1); }
+
+		/* ═══════════════════════════════════════════════════════════
+		   RESPONSIVE
+		═══════════════════════════════════════════════════════════ */
+		@media (max-width: 768px) {
+			#hero-person { width: 80%; }
+			#hero-text { width: 100%; align-items: center; text-align: center; padding: 80px 5% 30px; }
+			.survey-card { padding: 30px 18px; }
+		}
+
+	</style>
+</head>
+
+<body class="stretched">
+<div id="wrapper" class="clearfix">
+
+	<!-- ═══════════════════════════════════════════════════════════
+	     HEADER fijo con logo marca.png
+	═══════════════════════════════════════════════════════════ -->
+	<header id="header" class="transparent-header sticky-transparent static-sticky">
+		<div id="header-wrap">
+			<div class="container clearfix" style="height:70px;display:flex;align-items:center;">
+
+				<div id="primary-menu-trigger"><i class="icon-reorder" style="color:#fff;"></i></div>
+
+				<!-- Logo → imagen marca.png -->
+				<div id="logo">
+					<a href="https://linkfly.to/danielguerra">
+						<img src="demos/resume/images/marca.png" alt="Daniel Guerra 102" class="logo-img" />
+					</a>
+				</div>
+
+			</div>
+		</div>
+	</header>
+
+	<!-- ═══════════════════════════════════════════════════════════
+	     HERO — 4 capas: fondo | overlay | partículas | persona | texto | blur
+	═══════════════════════════════════════════════════════════ -->
+	<div id="hero-section">
+
+		<!-- CAPA 1: Fondo estático fondo.png -->
+		<div id="hero-bg"></div>
+
+		<!-- CAPA 1b: Overlay oscuro suave -->
+		<div id="hero-overlay"></div>
+
+		<!-- CAPA 2: Canvas de partículas (cubre TODO el hero) -->
+		<canvas id="particles-canvas"></canvas>
+
+		<!-- CAPA 3: Foto de Daniel (fade-in desde izquierda, altura completa) -->
+		<div id="hero-person"></div>
+
+		<!-- CAPA 4: Texto y botón (lado derecho) -->
+		<div id="hero-text">
+			<h1>Daniel Guerra</h1>
+			<p>Representante a la Cámara<br>por Nariño · Vota <strong>102</strong></p>
+			<button id="btn-comenzar">Comencemos &rarr;</button>
+		</div>
+
+		<!-- CAPA 5: Blur layer (se activa con scroll, igual que la plantilla original) -->
+		<div id="hero-blur-layer"></div>
+
+	</div><!-- /hero-section -->
+
+	<!-- ═══════════════════════════════════════════════════════════
+	     SECCIÓN ENCUESTA
+	═══════════════════════════════════════════════════════════ -->
+	<section id="content">
+		<div id="section-encuesta">
+			<div class="container">
+				<div class="survey-card">
+
+					<!-- Indicador de progreso -->
+					<div class="step-indicator" id="stepIndicator">
+						<div class="step-dot active" id="dot1"></div>
+						<div class="step-line"></div>
+						<div class="step-dot" id="dot2"></div>
+					</div>
+
+					<!-- ════════════════════════════════
+					     PASO 1 – Diagnóstico del barrio
+					════════════════════════════════ -->
+					<div class="survey-step active" id="step1">
+
+						<div class="survey-heading">
+							<h2>Cuéntanos qué necesita tu barrio</h2>
+							<p>Selecciona las necesidades que consideres prioritarias.<br>Puedes marcar varias opciones.</p>
+							<div class="survey-divider"></div>
+						</div>
+
+						<p class="pregunta-label">¿Cuáles son las principales necesidades de tu barrio?</p>
+
+						<div class="checkbox-grid">
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="A">
+								<label><span class="check-letter">A.</span> Mejoramiento y pavimentación de vías</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="B">
+								<label><span class="check-letter">B.</span> Reparación de andenes y accesibilidad</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="C">
+								<label><span class="check-letter">C.</span> Mejor iluminación pública</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="D">
+								<label><span class="check-letter">D.</span> Seguridad ciudadana</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="E">
+								<label><span class="check-letter">E.</span> Prevención del consumo de drogas</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="F">
+								<label><span class="check-letter">F.</span> Empleo y emprendimiento</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="G">
+								<label><span class="check-letter">G.</span> Agua y alcantarillado</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="H">
+								<label><span class="check-letter">H.</span> Recolección de basuras</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="I">
+								<label><span class="check-letter">I.</span> Parques y zonas verdes</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="J">
+								<label><span class="check-letter">J.</span> Transporte público</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="K">
+								<label><span class="check-letter">K.</span> Escenarios deportivos</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="L">
+								<label><span class="check-letter">L.</span> Servicios de salud</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="M">
+								<label><span class="check-letter">M.</span> Programas culturales</label>
+							</div>
+							<div class="check-item" onclick="toggleCheck(this)">
+								<input type="checkbox" name="necesidad" value="N">
+								<label><span class="check-letter">N.</span> Apoyo a población vulnerable</label>
+							</div>
+						</div>
+
+						<div class="otro-wrap">
+							<div class="check-item" onclick="toggleOtro(this)">
+								<input type="checkbox" id="check-otro">
+								<label>Otro (especifica)</label>
+							</div>
+							<input type="text" id="otro-input" placeholder="Describe otra necesidad de tu barrio..." />
+						</div>
+
+						<p class="survey-error" id="error1">⚠ Por favor selecciona al menos una opción antes de continuar.</p>
+						<button class="survey-btn" onclick="goToStep2()">Continuar &rarr;</button>
+
+					</div><!-- /step1 -->
+
+					<!-- ════════════════════════════════
+					     PASO 2 – Información personal
+					════════════════════════════════ -->
+					<div class="survey-step" id="step2">
+
+						<div class="survey-heading">
+							<h2>Déjanos tus datos</h2>
+							<p>Tu información es estrictamente confidencial y se usa<br>solo para registrar tu participación ciudadana.</p>
+							<div class="survey-divider"></div>
+						</div>
+
+						<div class="personal-form">
+							<div class="form-group-survey">
+								<label for="inp-nombre">Nombre completo *</label>
+								<input type="text" id="inp-nombre" placeholder="Ej: María García Pérez" />
+							</div>
+							<div class="form-group-survey">
+								<label for="inp-cedula">Número de cédula *</label>
+								<input type="number" id="inp-cedula" placeholder="Ej: 1234567890" />
+							</div>
+							<div class="form-group-survey">
+								<label for="inp-barrio">Barrio de residencia *</label>
+								<input type="text" id="inp-barrio" placeholder="Ej: El Prado" />
+							</div>
+							<div class="form-group-survey">
+								<label for="inp-celular">Número de celular *</label>
+								<input type="number" id="inp-celular" placeholder="Ej: 3001234567" />
+							</div>
+							<div class="form-group-survey">
+								<div class="autorizo-wrap" onclick="toggleAutorizo()">
+									<input type="checkbox" id="check-autorizo">
+									<label>
+										Autorizo el tratamiento de mis datos personales conforme a la
+										<strong style="color:#fca5a5;">Ley 1581 de 2012</strong> de Colombia.
+									</label>
+								</div>
+							</div>
+							<p class="survey-error" id="error2"></p>
+							<button class="survey-btn" id="btn-enviar" onclick="enviarEncuesta()">Enviar información</button>
+						</div>
+
+					</div><!-- /step2 -->
+
+					<!-- ════════════════════════════════
+					     PANTALLA DE ÉXITO
+					════════════════════════════════ -->
+					<div class="survey-step" id="step-success">
+
+						<div class="success-img-wrap">
+							<img src="demos/resume/images/redondos.png" alt="Gracias" />
+						</div>
+
+						<h2>¡Tu voz cuenta!</h2>
+
+						<div class="success-msg">
+							Hemos recibido tu información correctamente. Muy pronto estaremos
+							compartiendo propuestas y acciones concretas para tu barrio.
+							Gracias por confiar y participar.
+							<span class="success-firma">Daniel Guerra — Representante a la Cámara · 102</span>
+						</div>
+
+						<a class="btn-regresar" href="https://linkfly.to/danielguerra" target="_blank">
+							Volver al inicio
+						</a>
+
+					</div><!-- /step-success -->
+
+				</div><!-- /survey-card -->
+			</div><!-- /container -->
+		</div><!-- /section-encuesta -->
+	</section>
+
+	<!-- Footer -->
+	<footer id="footer" style="background:#0a0f1a;padding:40px 0;text-align:center;">
+		<span style="color:rgba(255,255,255,0.2);font-size:12px;letter-spacing:2px;">
+			&copy; 2024 Daniel Guerra · Representante a la Cámara · Vota 102
+		</span>
+	</footer>
+
+</div><!-- #wrapper -->
+
+<div id="gotoTop" class="icon-angle-up"></div>
+
+<!-- ═══ LIBRERÍAS ═══════════════════════════════════════════════ -->
+<script src="js/jquery.js"></script>
+<script src="js/plugins.js"></script>
+<script src="js/functions.js"></script>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   CONFIGURACIÓN
+═══════════════════════════════════════════════════════════════ */
+var SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyhgWJ1Q_0fzEBvjX5hoAqQnszHJKRNS7iZQMUDcKj9NjPANMUyuOGkzV1pONeHzrSO7A/exec";
+
+
+/* ═══════════════════════════════════════════════════════════════
+   PARTÍCULAS INTERACTIVAS
+   • El canvas se redimensiona al tamaño real del hero en cada frame
+   • Movimiento horizontal lento
+   • Reacción al mouse: se apartan si están a menos de 130px
+═══════════════════════════════════════════════════════════════ */
+(function initParticles() {
+	var hero   = document.getElementById('hero-section');
+	var canvas = document.getElementById('particles-canvas');
+	var ctx    = canvas.getContext('2d');
+	var mouse  = { x: -9999, y: -9999 };
+
+	/* ── Ajustar tamaño del canvas al del hero ── */
+	function resizeCanvas() {
+		canvas.width  = hero.offsetWidth;
+		canvas.height = hero.offsetHeight;
+	}
+	resizeCanvas();
+	window.addEventListener('resize', resizeCanvas);
+
+	/* ── Seguimiento del mouse solo dentro del hero ── */
+	hero.addEventListener('mousemove', function(e) {
+		var r  = canvas.getBoundingClientRect();
+		mouse.x = e.clientX - r.left;
+		mouse.y = e.clientY - r.top;
+	});
+	hero.addEventListener('mouseleave', function() {
+		mouse.x = -9999; mouse.y = -9999;
+	});
+
+	/* ── Constructor de partícula ── */
+	function Particle() { this.init(); }
+	Particle.prototype.init = function() {
+		this.x     = Math.random() * canvas.width;
+		this.y     = Math.random() * canvas.height;
+		this.r     = Math.random() * 3 + 1.2;
+		this.vx    = Math.random() * 0.45 + 0.12;
+		this.vy    = (Math.random() - 0.5) * 0.18;
+		this.alpha = Math.random() * 0.4 + 0.12;
+	};
+	Particle.prototype.update = function() {
+		this.x += this.vx;
+		this.y += this.vy;
+
+		/* Repulsión del mouse */
+		var dx = this.x - mouse.x;
+		var dy = this.y - mouse.y;
+		var d  = Math.sqrt(dx * dx + dy * dy);
+		if (d < 130 && d > 0) {
+			var f = (130 - d) / 130;
+			this.x += (dx / d) * f * 2.8;
+			this.y += (dy / d) * f * 2.8;
+		}
+
+		/* Reciclar al salir por la derecha */
+		if (this.x > canvas.width + 8) {
+			this.x = -8;
+			this.y = Math.random() * canvas.height;
+		}
+		/* Rebote vertical */
+		if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+	};
+	Particle.prototype.draw = function() {
+		ctx.beginPath();
+		ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+		ctx.fillStyle = 'rgba(255,255,255,' + this.alpha + ')';
+		ctx.fill();
+	};
+
+	/* ── Crear 75 partículas ── */
+	var particles = [];
+	for (var i = 0; i < 75; i++) particles.push(new Particle());
+
+	/* ── Bucle de animación ── */
+	function loop() {
+		ctx.clearRect(0, 0, canvas.width, canvas.height);
+		for (var j = 0; j < particles.length; j++) {
+			particles[j].update();
+			particles[j].draw();
+		}
+		requestAnimationFrame(loop);
+	}
+	loop();
+})();
+
+
+/* ═══════════════════════════════════════════════════════════════
+   EFECTO BLUR AL HACER SCROLL
+   Replica el comportamiento original de la plantilla:
+   la imagen del hero se desenfoca progresivamente conforme
+   el usuario baja, revelando la sección de encuesta debajo.
+═══════════════════════════════════════════════════════════════ */
+var blurLayer   = document.getElementById('hero-blur-layer');
+var heroSection = document.getElementById('hero-section');
+
+window.addEventListener('scroll', function() {
+	var scrollY    = window.pageYOffset;
+	var heroH      = heroSection.offsetHeight;
+	/* Progreso: 0 cuando está en el top, 1 cuando el hero sale de vista */
+	var progress   = Math.min(scrollY / heroH, 1);
+
+	if (scrollY > 0) {
+		blurLayer.style.opacity = progress * 0.88; /* max ~88% de opacidad */
+	} else {
+		blurLayer.style.opacity = 0;
+	}
+});
+
+
+/* ═══════════════════════════════════════════════════════════════
+   BOTÓN COMENCEMOS
+═══════════════════════════════════════════════════════════════ */
+document.getElementById('btn-comenzar').addEventListener('click', function() {
+	scrollToEncuesta();
+});
+
+function scrollToEncuesta() {
+	var target = document.getElementById('content');
+	var offset = target.getBoundingClientRect().top + window.pageYOffset - 60;
+	window.scrollTo({ top: offset, behavior: 'smooth' });
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   TOGGLE CHECKBOX
+═══════════════════════════════════════════════════════════════ */
+function toggleCheck(card) {
+	var cb = card.querySelector('input[type="checkbox"]');
+	cb.checked = !cb.checked;
+	card.classList.toggle('selected', cb.checked);
+	document.getElementById('error1').style.display = 'none';
+}
+
+function toggleOtro(card) {
+	var cb  = document.getElementById('check-otro');
+	var inp = document.getElementById('otro-input');
+	cb.checked = !cb.checked;
+	card.classList.toggle('selected', cb.checked);
+	inp.style.display = cb.checked ? 'block' : 'none';
+	if (!cb.checked) inp.value = '';
+}
+
+function toggleAutorizo() {
+	document.getElementById('check-autorizo').checked =
+		!document.getElementById('check-autorizo').checked;
+	document.getElementById('error2').style.display = 'none';
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   INDICADOR DE PASOS
+═══════════════════════════════════════════════════════════════ */
+function updateDots(step) {
+	document.getElementById('dot1').className = 'step-dot' + (step === 1 ? ' active' : ' done');
+	document.getElementById('dot2').className = 'step-dot' + (step === 2 ? ' active' : '');
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   IR A PASO 2
+═══════════════════════════════════════════════════════════════ */
+function goToStep2() {
+	var checks = document.querySelectorAll('input[name="necesidad"]:checked');
+	if (checks.length === 0 && !document.getElementById('check-otro').checked) {
+		document.getElementById('error1').style.display = 'block';
+		return;
+	}
+	document.getElementById('step1').classList.remove('active');
+	document.getElementById('step2').classList.add('active');
+	updateDots(2);
+	scrollToEncuesta();
+}
+
+
+/* ═══════════════════════════════════════════════════════════════
+   ENVIAR ENCUESTA
+═══════════════════════════════════════════════════════════════ */
+function enviarEncuesta() {
+	var nombre   = document.getElementById('inp-nombre').value.trim();
+	var cedula   = document.getElementById('inp-cedula').value.trim();
+	var barrio   = document.getElementById('inp-barrio').value.trim();
+	var celular  = document.getElementById('inp-celular').value.trim();
+	var autorizo = document.getElementById('check-autorizo').checked;
+	var errEl    = document.getElementById('error2');
+
+	if (!nombre || !cedula || !barrio || !celular) {
+		errEl.textContent = '⚠ Por favor completa todos los campos obligatorios.';
+		errEl.style.display = 'block'; return;
+	}
+	if (!autorizo) {
+		errEl.textContent = '⚠ Debes autorizar el tratamiento de datos para continuar.';
+		errEl.style.display = 'block'; return;
+	}
+	errEl.style.display = 'none';
+
+	var sel = [];
+	document.querySelectorAll('input[name="necesidad"]:checked').forEach(function(cb){ sel.push(cb.value); });
+
+	var otra = '';
+	if (document.getElementById('check-otro').checked)
+		otra = document.getElementById('otro-input').value.trim();
+
+	var payload = {
+		fecha: new Date().toISOString(), barrio: barrio, nombre: nombre,
+		cedula: cedula, celular: celular,
+		A_Vias: sel.indexOf('A')>=0?1:0,  B_Andenes: sel.indexOf('B')>=0?1:0,
+		C_Iluminacion: sel.indexOf('C')>=0?1:0, D_Seguridad: sel.indexOf('D')>=0?1:0,
+		E_Drogas: sel.indexOf('E')>=0?1:0, F_Empleo: sel.indexOf('F')>=0?1:0,
+		G_Agua: sel.indexOf('G')>=0?1:0,  H_Basuras: sel.indexOf('H')>=0?1:0,
+		I_Parques: sel.indexOf('I')>=0?1:0, J_Transporte: sel.indexOf('J')>=0?1:0,
+		K_Deporte: sel.indexOf('K')>=0?1:0, L_Salud: sel.indexOf('L')>=0?1:0,
+		M_Cultura: sel.indexOf('M')>=0?1:0, N_Vulnerable: sel.indexOf('N')>=0?1:0,
+		otra: otra
+	};
+
+	var btn = document.getElementById('btn-enviar');
+	btn.disabled = true;
+	btn.innerHTML = '<span class="spinner"></span>Enviando...';
+
+	fetch(SCRIPT_URL, {
+		method: 'POST', mode: 'no-cors',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify(payload)
+	})
+	.then(function()  { mostrarExito(); })
+	.catch(function() { mostrarExito(); });
+}
+
+function mostrarExito() {
+	document.getElementById('step2').classList.remove('active');
+	document.getElementById('step-success').classList.add('active');
+	document.getElementById('stepIndicator').style.display = 'none';
+	scrollToEncuesta();
+}
+</script>
+
+</body>
+</html>
