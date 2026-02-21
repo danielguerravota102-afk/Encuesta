@@ -6,7 +6,20 @@
 	<meta name="author" content="SemiColonWeb" />
 
 	<!-- ═══ FUENTES Y ESTILOS BASE ═══════════════════════════════ -->
-	<link href="http://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400italic,600,700,900|Playfair+Display:400,700" rel="stylesheet" type="text/css" />
+	<style>
+		@font-face {
+			font-family: 'Modica';
+			src: url('fonts/ModicaPro-Normal-Bold.otf') format('opentype');
+			font-weight: 700;
+			font-style: normal;
+		}
+		@font-face {
+			font-family: 'Modica';
+			src: url('fonts/ModicaPro-Normal-Medium.otf') format('opentype');
+			font-weight: 400;
+			font-style: normal;
+		}
+	</style>
 	<link rel="stylesheet" href="css/bootstrap.css" type="text/css" />
 	<link rel="stylesheet" href="style.css" type="text/css" />
 	<link rel="stylesheet" href="css/dark.css" type="text/css" />
@@ -30,6 +43,8 @@
 			margin: 0;
 			padding: 0;
 			overflow-x: hidden;
+			font-family: 'Modica', sans-serif;
+			font-weight: 400;
 		}
 
 		/* ═══════════════════════════════════════════════════════════
@@ -144,7 +159,7 @@
 			text-align: right;
 		}
 		#hero-text h1 {
-			font-family: 'Playfair Display', serif;
+			font-family: 'Modica', sans-serif;
 			font-size: clamp(2.2rem, 4.5vw, 3.6rem);
 			font-weight: 700;
 			color: #fff;
@@ -155,9 +170,9 @@
 			animation: fadeRight 1s ease 0.9s forwards;
 		}
 		#hero-text p {
-			font-family: 'Source Sans Pro', sans-serif;
+			font-family: 'Modica', sans-serif;
 			font-size: clamp(1rem, 1.8vw, 1.2rem);
-			font-weight: 300;
+			font-weight: 400;
 			color: rgba(255,255,255,0.93);
 			line-height: 1.65;
 			margin: 0 0 32px;
@@ -177,7 +192,7 @@
 			padding: 14px 42px;
 			background: var(--rojo);
 			color: #fff;
-			font-family: 'Source Sans Pro', sans-serif;
+			font-family: 'Modica', sans-serif;
 			font-size: 14px;
 			font-weight: 700;
 			letter-spacing: 3px;
@@ -253,7 +268,7 @@
 		.survey-heading { text-align: center; margin-bottom: 10px; }
 		.survey-heading h2 {
 			color: #f1f5f9;
-			font-family: 'Playfair Display', serif;
+			font-family: 'Modica', sans-serif;
 			font-size: 2.1rem;
 			margin-bottom: 10px;
 		}
@@ -324,7 +339,7 @@
 			display: none; width: 100%; margin-top: 9px;
 			padding: 12px 16px; background: rgba(255,255,255,0.05);
 			border: 1px solid var(--border); border-radius: 6px;
-			color: #fff; font-size: 14px; font-family: 'Source Sans Pro', sans-serif;
+			color: #fff; font-size: 14px; font-family: 'Modica', sans-serif;
 		}
 		#otro-input:focus { outline: none; border-color: var(--rojo-light); }
 		#otro-input::placeholder { color: rgba(255,255,255,0.22); }
@@ -345,7 +360,7 @@
 		.survey-btn {
 			display: block; margin: 26px auto 0; padding: 15px 52px;
 			background: var(--rojo); color: #fff; border: none; border-radius: 4px;
-			font-family: 'Source Sans Pro', sans-serif; font-size: 14px; font-weight: 700;
+			font-family: 'Modica', sans-serif; font-size: 14px; font-weight: 700;
 			letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
 			transition: background 0.3s, transform 0.2s, box-shadow 0.2s;
 			box-shadow: 0 4px 14px rgba(192,32,26,0.35);
@@ -360,13 +375,13 @@
 		.form-group-survey { margin-bottom: 18px; }
 		.form-group-survey label {
 			display: block; color: rgba(255,255,255,0.5); font-size: 11px;
-			letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 7px; font-weight: 600;
+			letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 7px; font-weight: 700;
 		}
 		.form-group-survey input[type="text"],
 		.form-group-survey input[type="number"] {
 			width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.05);
 			border: 1px solid var(--border); border-radius: 6px; color: #f1f5f9;
-			font-size: 15px; font-family: 'Source Sans Pro', sans-serif;
+			font-size: 15px; font-family: 'Modica', sans-serif;
 			transition: border 0.2s, background 0.2s;
 		}
 		.form-group-survey input:focus { outline: none; border-color: var(--rojo-light); background: rgba(192,32,26,0.06); }
@@ -398,17 +413,16 @@
 		═══════════════════════════════════════════════════════════ */
 		#step-success { text-align: center; padding: 30px 20px 50px; }
 		.success-img-wrap {
-			width: 170px; height: 170px;
-			margin: 0 auto 26px; border-radius: 50%; overflow: hidden;
-			box-shadow: 0 8px 40px rgba(192,32,26,0.45);
+			max-width: 320px;
+			margin: 0 auto 26px;
 			animation: popIn 0.55s cubic-bezier(0.175,0.885,0.32,1.275) forwards;
 		}
-		.success-img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+		.success-img-wrap img { width: 100%; height: auto; display: block; }
 		@keyframes popIn {
 			from { transform: scale(0); opacity: 0; }
 			to   { transform: scale(1); opacity: 1; }
 		}
-		#step-success h2 { color: #f1f5f9; font-family: 'Playfair Display', serif; font-size: 2rem; margin-bottom: 18px; }
+		#step-success h2 { color: #f1f5f9; font-family: 'Modica', sans-serif; font-size: 2rem; margin-bottom: 18px; }
 		.success-msg {
 			color: var(--text-light); font-size: 16px; max-width: 540px;
 			margin: 0 auto 30px; line-height: 1.85;
@@ -419,7 +433,7 @@
 		.btn-regresar {
 			display: inline-block; margin-top: 6px; padding: 13px 38px;
 			background: var(--rojo); color: #fff !important; border: none;
-			border-radius: 4px; font-family: 'Source Sans Pro', sans-serif;
+			border-radius: 4px; font-family: 'Modica', sans-serif;
 			font-size: 13px; font-weight: 700; letter-spacing: 2px;
 			text-transform: uppercase; cursor: pointer;
 			transition: background 0.3s, transform 0.2s;
